@@ -1,0 +1,16 @@
+{
+    "name": "ivang/php-todo-list",
+    "description": "Aplicación PHP para gestionar una lista de tareas pendientes con MVC y Active Record.",
+    "autoload": {
+        "psr-4": {
+            "MVC\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ivan Guerrero",
+            "email": "ivangvprogrammer@gmail.com"
+        }
+    ],
+    "require": {}
+}
