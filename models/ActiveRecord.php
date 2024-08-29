@@ -11,26 +11,50 @@ class ActiveRecord {
     // Alertas y Mensajes
     protected static $alertas = [];
 
-    // Definir la conexión a la base de datos
+    /**
+     * Establece la conexión a la base de datos.
+     *
+     * @param mysqli $database Instancia de la conexión a la base de datos.
+     */
     public static function setDB($database) {
         self::$db = $database;
     }
 
+    /**
+     * Agrega una alerta a la lista de alertas.
+     *
+     * @param string $tipo Tipo de alerta (e.g., error, éxito).
+     * @param string $mensaje Mensaje de la alerta.
+     */
     public static function setAlertas($tipo, $mensaje) {
         static::$alertas[$tipo][] = $mensaje;
     }
 
-    // Validacion
+    /**
+     * Obtiene todas las alertas.
+     *
+     * @return array Lista de alertas.
+     */
     public static function getAlertas() {
         return static::$alertas;
     }
 
+    /**
+     * Valida los datos del objeto y limpia las alertas.
+     *
+     * @return array Lista de alertas después de la validación.
+     */
     public function validar() {
         static::$alertas = [];
         return static::$alertas;
     }
 
-    // Consulta SQL para crear un objeto en Memoria
+    /**
+     * Ejecuta una consulta SQL y devuelve objetos correspondientes.
+     *
+     * @param string $query Consulta SQL.
+     * @return array Array de objetos correspondientes a los registros.
+     */
     public static function consultarSQL($query) {
         // Consultar la base de datos
         $resultado = self::$db->query($query);
@@ -48,7 +72,12 @@ class ActiveRecord {
         return $array;
     }
 
-    // Crea el objeto en memoria que es igual a la tabla de la base de datos
+    /**
+     * Crea un objeto a partir de un registro.
+     *
+     * @param array $registro Datos del registro.
+     * @return static Objeto creado.
+     */
     protected static function crearObjeto($registro) {
         $objeto = new static;
 
@@ -60,7 +89,11 @@ class ActiveRecord {
         return $objeto;
     }
 
-    // Identificar y unir los atributos de la BD
+    /**
+     * Obtiene los atributos del objeto.
+     *
+     * @return array Atributos del objeto.
+     */
     public function atributos() {
         $atributos = [];
         foreach(static::$columnasDB as $columna) {
@@ -70,7 +103,11 @@ class ActiveRecord {
         return $atributos;
     }
 
-    // Sanitizar los datos
+    /**
+     * Sanitiza los atributos del objeto para prevenir inyecciones SQL.
+     *
+     * @return array Atributos sanitizados.
+     */
     public function sanitizarAtributos() {
         $atributos = $this->atributos();
         $sanitizado = [];
@@ -81,7 +118,11 @@ class ActiveRecord {
         return $sanitizado;
     }
 
-    // Sincroniza la BD con onjetos en memoria
+    /**
+     * Sincroniza el objeto con los datos proporcionados.
+     *
+     * @param array $args Datos para sincronizar.
+     */
     public function sincronizar($args=[]) {
         foreach($args as $key => $value) {
             if(property_exists($this, $key) && !is_null($value)) {
@@ -90,7 +131,11 @@ class ActiveRecord {
         }
     }
 
-    // Registro - CRUD
+    /**
+     * Guarda el objeto en la base de datos (crea o actualiza).
+     *
+     * @return array Resultado de la operación y el ID del nuevo registro (si aplica).
+     */
     public function guardar() {
         $resultado = '';
         if(!is_null($this->id)) {
@@ -103,21 +148,34 @@ class ActiveRecord {
         return $resultado;
     }
 
-    // Todos los registros
+    /**
+     * Obtiene todos los registros de la tabla.
+     *
+     * @return array Array de objetos de la tabla.
+     */
     public static function all() {
         $query = "SELECT * FROM " . static::$tabla;
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
 
-    // Buscar por ID
+    /**
+     * Busca un registro por su ID.
+     *
+     * @param int $id ID del registro.
+     * @return static|null Objeto correspondiente al registro o null si no se encuentra.
+     */
     public static function find($id) {
         $query = "SELECT * FROM " . static::$tabla . " WHERE id = {$id}";
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado );
     }
 
-    // Crear un nuevo registro
+    /**
+     * Crea un nuevo registro en la base de datos.
+     *
+     * @return array Resultado de la operación y el ID del nuevo registro.
+     */
     public function crear() {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
@@ -137,7 +195,11 @@ class ActiveRecord {
         ];
     }
 
-    // Actualizar un registro
+    /**
+     * Actualiza un registro existente en la base de datos.
+     *
+     * @return bool Resultado de la operación.
+     */
     public function actualizar() {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
@@ -159,7 +221,11 @@ class ActiveRecord {
         return $resultado;
     }
 
-    // Eliminar un registro
+    /**
+     * Elimina un registro de la base de datos.
+     *
+     * @return bool Resultado de la operación.
+     */
     public function eliminar() {
         $query = "DELETE FROM " . static::$tabla . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
 
