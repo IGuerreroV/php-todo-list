@@ -7,7 +7,7 @@
 // - 'root' es la contraseña del usuario de la base de datos
 // - '' es el nombre de la base de datos
 
-$db = mysqli_connect('localhost', 'root', 'root', '');
+$db = mysqli_connect('localhost', 'root', 'root', 'todolist_mvc');
 
 // Comprobar la conexión
 if(!$db) {
