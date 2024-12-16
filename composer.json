@@ -3,7 +3,9 @@
     "description": "Aplicación PHP para gestionar una lista de tareas pendientes con MVC y Active Record.",
     "autoload": {
         "psr-4": {
-            "MVC\\": "./"
+            "MVC\\": "./",
+            "Controllers\\": "./controllers",
+            "Models\\": "./models"
         }
     },
     "authors": [

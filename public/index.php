@@ -1,13 +1,13 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../includes/app.php';
 
-use MVC\Router;
+use Controllers\TaskController;
 
-// Inicializa el router y maneja las solicitudes
-$router = new Router();
+// Instancia principal
+$controller = new TaskController();
 
+// Llamar al metodo index
+$controller->index();
 
-
-
-// Compueba la ruta actual y llama a la función asociada
-$router->comprobarRutas();
+// Incluir el Layout
+$controller->index();

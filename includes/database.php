@@ -10,7 +10,7 @@
 $db = mysqli_connect('localhost', 'root', 'root', 'todolist_mvc');
 
 // Comprobar la conexión
-if(!$db) {
+if (!$db) {
     // Si no se puede conectar a la base de datos, muestra un mensaje de error
     echo 'Error en la conexión';
     // Muestra el número de error de la conexión para depuración
