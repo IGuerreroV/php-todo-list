@@ -1,48 +1,49 @@
 // Cargamos los plugins
-import { src, dest, watch, parallel } from 'gulp'
-import sass from 'gulp-sass'
-import postcss from 'gulp-postcss'
-import autoprefixer from  'gulp-autoprefixer'
-import cssnano from 'cssnano'
-import sourcemaps from 'gulp-sourcemaps'
-import concat from 'gulp-concat'
-import terser from 'gulp-terser'
 
+import * as dartSass from "sass";
+
+import { dest, parallel, src, watch } from "gulp";
+
+import gulpBabel from "gulp-babel";
+import gulpPlumber from "gulp-plumber";
+import gulpSass from "gulp-sass";
+import terser from "gulp-terser";
+
+const sass = gulpSass(dartSass); // Cargamos gulp-sass y le pasamos la instancia de Sass
 
 const paths = {
-    scss: 'src/scss/**/*.scss',
-    js: 'src/js/**/*.js'
-}
-
-// Create functions
+	scss: "src/scss/**/*.scss",
+	js: "src/js/**/*.js",
+};
 
 // scss
-function css() {
-    return src(paths.scss, {sourcemaps: true})
-        .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError)) // Compila SCSS a CSS, maneja errores de Sass
-        .pipe(postcss([autoprefixer(), cssnano()])) // Procesa el CSS con PostCSS, aoto-prefixer y cssnano para minificar
-        .pipe(sourcemaps.write('.')) // Escribe los mapas de origen en el mismo directorio que el CSS
-        .pipe(dest('public/dist/css')) // Guarda el CSS en la carpeta de destino
+export function css(done) {
+	src(paths.scss, { sourcemaps: true })
+		.pipe(gulpPlumber()) // Evita que se detenga la ejecucion en caso de errores
+		.pipe(
+			sass({
+				outputStyle: "compressed",
+				silenceDeprecations: ["legacy-js-api"],
+			}).on("error", sass.logError),
+		) // Compila el SCSS a CSS y lo minifica
+		.pipe(dest("./public/dist/css")); // Guarda el CSS en la carpeta de destino
+	done();
 }
 
 // js
-function js() {
-    return src(paths.js, {sourcemaps: true})
-        .pipe(sourcemaps.init()) // Inicia la generacion de mapas de origen
-        .pipe(concat('bundle.js')) // Concatena todos los archivos JS en un solo archivo
-        .pipe(terser()) // Minifica el JS
-        .pipe(sourcemaps.write('.')) // Escribe los mapas de origen en el mismo directorio que el JS
-        .pipe(rename({ suffix: '.min' })) // Agrega el sufijo .min al archivo para indicar que esta minificado
-        .pipe(dest('public/dist/js')) // Guarda el JS en la carpeta de destino
+export function js(done) {
+	src(paths.js, { sourcemaps: true })
+		.pipe(gulpPlumber()) // Evita que se detenga la ejecucion en caso de errores
+		.pipe(gulpBabel({ presets: ["@babel/preset-env"] })) // Convierte el JS a ES5
+		.pipe(terser()) // Minifica el JS
+		.pipe(dest("public/dist/js")); // Guarda el JS en la carpeta de destino
+	done();
 }
 
-function watchArchivos() {
-    watch(paths.scss, css)
-    watch(paths.js, js)
+export function dev() {
+	watch(paths.scss, css);
+	watch(paths.js, js);
 }
 
 // Exporta la funcion para ser utilizada por gulp
-exports.css = css;
-exports.watchArchivos = watchArchivos
-exports.default = parallel(css, js, watchArchivos)
+export default parallel(css, js, dev);

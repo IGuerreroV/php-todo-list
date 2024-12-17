@@ -10,7 +10,27 @@
 </head>
 
 <body>
-    <h1>Hola Mundo</h1>
+    <div class="contenedor">
+        <header>
+            <h1>Tareas</h1>
+        </header>
+        <main>
+            <input type="text" id="tarea" placeholder="Nueva Tarea" name="tarea">
+            <input type="submit" class="boton" value="+">
+        </main>
+        <aside>
+            <div>
+                <span>Total</span>
+                <span>•</span>
+                <span>Completadas</span>
+                <span>•</span>
+                <span>pendientes</span>
+            </div>
+        </aside>
+        <footer>
+            <p>&copy; 2024 Todo List</p>
+        </footer>
+    </div>
 </body>
 
 </html>
