@@ -1,0 +1,58 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+@use 'sass:color';
+
+.contenedor {
+  max-width: 40%; // ancho máximo 
+  margin: 0 auto; // centrado horizontal
+  margin-top: 5rem;
+
+  h1 {
+    color: v.$principal;
+  }
+
+  .tareas {
+    display: flex;
+    margin-top: 5rem;
+    justify-content: space-between;
+    gap: 1rem; // separación entre elementos
+
+    .nueva-tarea {
+      width: 90%;
+      border: none;
+      background-color: color.adjust(v.$white_blue, $lightness: -5%);
+      font-size: 2rem;
+      padding: 1rem 2rem;
+      border-radius: .5rem;
+
+      &::placeholder {
+        color: v.$gray;
+      }
+
+    }
+
+    .boton {
+      flex: 1; // ocupa todo el espacio disponible
+      border: none;
+      width: 4rem;
+      border-radius: .5rem;
+      background-color: v.$principal;
+    }
+  }
+
+  .contenedor-tareas {
+    text-align: center;
+    margin-top: 5rem;
+    span {
+      color: black;
+    }
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 5rem;
+    p {
+      color: black;
+    }
+  }
+}

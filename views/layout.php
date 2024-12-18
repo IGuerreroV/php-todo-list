@@ -10,15 +10,15 @@
 </head>
 
 <body>
-    <div class="contenedor">
+    <div class="contenedor contenedor-tareas">
         <header>
             <h1>Tareas</h1>
         </header>
-        <main>
-            <input type="text" id="tarea" placeholder="Nueva Tarea" name="tarea">
+        <main class="tareas">
+            <input class="nueva-tarea" type="text" id="tarea" placeholder="Nueva tarea..." name="tarea">
             <input type="submit" class="boton" value="+">
         </main>
-        <aside>
+        <aside class="contenedor-tareas">
             <div>
                 <span>Total</span>
                 <span>•</span>
