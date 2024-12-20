@@ -15,6 +15,6 @@ function debuguear($variable)
 // para evitar que se ejecuten scripts maliciosos
 function s($html): string
 {
-    $s = htmlspecialchars($html);
+    $s = htmlspecialchars($html); // Convierte los caracteres especiales en entidades HTML
     return $s; // Retorna el HTML sanitizado
 }

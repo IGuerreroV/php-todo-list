@@ -1,22 +1,17 @@
 <?php
+// debuguear($_ENV);
+$db = mysqli_connect(
+  $_ENV['DB_HOST'],
+  $_ENV['DB_USER'],
+  $_ENV['DB_PASSWORD'],
+  $_ENV['DB_DATABASE'],
+); // Conexión a la base de datos
 
-// Conexión a la base de datos
-// Parametros:
-// - 'localhost' es el servidor de la base de datos
-// - 'root' es el usuario de la base de datos
-// - 'root' es la contraseña del usuario de la base de datos
-// - '' es el nombre de la base de datos
+$db->set_charset('utf8'); // Para que se muestren las tildes correctamente
 
-$db = mysqli_connect('localhost', 'root', 'root', 'todolist_mvc');
-
-// Comprobar la conexión
 if (!$db) {
-    // Si no se puede conectar a la base de datos, muestra un mensaje de error
-    echo 'Error en la conexión';
-    // Muestra el número de error de la conexión para depuración
-    echo 'errno de depuración: ' . mysqli_connect_errno();
-    // Muestra el mensaje de error de la conexión para depuración
-    echo 'error de depuración: ' . mysqli_connect_error();
-    // Termina la ejecución del script
-    exit;
+  echo "Error: No se pudo conectar a MySQL." . PHP_EOL; // Si no se conecta a la base de datos
+  echo "errno de depuración: " . mysqli_connect_errno(); // Muestra el error
+  echo "error de depuración: " . mysqli_connect_error(); // Muestra el error
+  exit; // Sale del programa
 }

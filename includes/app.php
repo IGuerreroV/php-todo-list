@@ -1,4 +1,13 @@
 <?php
+// Incluye el archivo de autoloading generado por Composer para cargar automáticamente las clases.
+// `__DIR__` se refiere al directorio actual del archivo `app.php`.
+// La ruta `'/../vendor/autoload.php'` navega al directorio `vendor` donde Composer coloca el autoloading.
+// Asegúrate de haber ejecutado `composer install` para generar este archivo.
+require __DIR__ . '/../vendor/autoload.php';
+
+// Carga las variables de entorno desde el archivo `.env`.
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 // Incluye funciones auxiliares necesarias para la aplicación.
 // Asegúrate de que este archivo contiene funciones que utilizas en tu aplicación.
@@ -11,8 +20,6 @@ require 'funciones.php';
 // Asegúrate de manejar de forma segura la información sensible como credenciales.
 require 'database.php';
 
-// Incluye el archivo de autoloading generado por Composer para cargar automáticamente las clases.
-// `__DIR__` se refiere al directorio actual del archivo `app.php`.
-// La ruta `'/../vendor/autoload.php'` navega al directorio `vendor` donde Composer coloca el autoloading.
-// Asegúrate de haber ejecutado `composer install` para generar este archivo.
-require __DIR__ . '/../vendor/autoload.php';
+// Incluye las clases de los modelos que representan las tablas de la base de datos.
+use Models\ActiveRecord;
+ActiveRecord::setDB($db);
