@@ -10,29 +10,32 @@
 </head>
 
 <body>
-  <div class="contenedor contenedor-tareas">
+  <div class="contenedor">
     <header>
       <h1>Tareas</h1>
     </header>
     <main class="tareas">
-      <form class="formulario" method="POST" id="form-tarea">
-        <input class="nueva-tarea" type="text" id="tarea" placeholder="Nueva tarea..." name="titulo" required>
-        <input type="submit" class="boton" value="+">
-      </form>
+      <div>
+        <form class="formulario" method="POST" id="form-tarea">
+          <input class="nueva-tarea" type="text" id="tarea" placeholder="Nueva tarea..." name="titulo" required>
+          <input type="submit" class="boton" value="+">
+        </form>
+      </div>
+
       <div class="contenedor-tareas" id="lista-tareas">
         <ul class="listado">
           <?php foreach ($tareas as $tarea): ?>
-            <li class="tarea">
+            <li>
               <div class="estado">
-                <input type="radio">
+                <input type="checkbox" id="estado" for="estado">
+                <label for="estado"><?php echo $tarea->titulo; ?></label>
               </div>
-              <p><?php echo $tarea->titulo; ?></p>
             </li>
           <?php endforeach; ?>
         </ul>
       </div>
     </main>
-    <aside class="contenedor-tareas">
+    <aside class="contenedor-estados">
       <div>
         <span>Total</span>
         <span>•</span>

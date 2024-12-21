@@ -12,45 +12,107 @@
   }
 
   .tareas {
-    display: flex;
     margin-top: 5rem;
     justify-content: space-between;
-    gap: 1rem; // separación entre elementos
 
-    .nueva-tarea {
-      width: 90%;
-      border: none;
-      background-color: color.adjust(v.$white_blue, $lightness: -5%);
-      font-size: 2rem;
-      padding: 1rem 2rem;
-      border-radius: .5rem;
 
-      &::placeholder {
-        color: v.$gray;
+    .formulario {
+      display: flex;
+      gap: 1rem; // separación entre elementos
+
+      .nueva-tarea {
+        width: 85%;
+        border: none;
+        background-color: color.adjust(v.$white_blue, $lightness: -5%);
+        font-size: 2rem;
+        padding: 1rem 2rem;
+        border-radius: .5rem;
+
+        &::placeholder {
+          color: v.$gray;
+        }
+
       }
 
+      .boton {
+        flex: 1; // ocupa todo el espacio disponible
+        border: none;
+        width: 4rem;
+        border-radius: .5rem;
+        background-color: v.$principal;
+      }
     }
 
-    .boton {
-      flex: 1; // ocupa todo el espacio disponible
-      border: none;
-      width: 4rem;
-      border-radius: .5rem;
-      background-color: v.$principal;
+    .contenedor-tareas {
+      margin-top: 5rem;
+
+      .listado {
+        padding: 0;
+        margin: 0;
+
+        li {
+          .estado {
+            display: flex; // Asegura que los elementos se alineen en línea
+            align-items: center; // Centra verticalmente
+            gap: 1rem; // Espacio entre el checkbox y el label
+            background-color: color.adjust(v.$white_blue, $lightness: -5%);
+            margin-top: 1rem;
+            border-radius: .5rem;
+            padding: .8rem 1rem;
+
+            input[type="checkbox"] {
+              appearance: none; // Elimina el estilo predeterminado
+            }
+
+            input[type="checkbox"]+label {
+              display: inline-flex; // Asegura que el label se alinee con el checkbox
+              align-items: center; // Centra verticalmente
+              font-size: 2rem; // Tamaño del texto del label
+              color: v.$black; // Color del texto
+              margin: 0; // Elimina el margen
+            }
+
+            input[type="checkbox"]+label::before {
+              content: "\2713";
+              height: 18px;
+              line-height: 18px; // Asegura que el contenido esté centrado verticalmente
+              text-align: center;
+              width: 18px;
+              display: inline-flex; // Cambia a inline-flex para centrar el contenido
+              align-items: center; // Centra verticalmente
+              justify-content: center; // Centra horizontalmente
+              margin-right: 1rem;
+              cursor: pointer;
+              accent-color: v.$principal;
+              border: 2px solid v.$gray;
+              border-radius: 5px;
+              background: white;
+            }
+
+            label {
+              font-size: 2rem;
+              color: v.$black;
+              margin: 0;
+            }
+          }
+        }
+      }
     }
   }
 
-  .contenedor-tareas {
+  .contenedor-estados {
     text-align: center;
-    margin-top: 5rem;
+
     span {
-      color: black;
+      color: v.$black;
     }
   }
+
 
   footer {
     text-align: center;
     margin-top: 5rem;
+
     p {
       color: black;
     }
