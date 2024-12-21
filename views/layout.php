@@ -27,8 +27,8 @@
           <?php foreach ($tareas as $tarea): ?>
             <li>
               <div class="estado">
-                <input type="checkbox" id="estado" for="estado">
-                <label for="estado"><?php echo $tarea->titulo; ?></label>
+                <input type="checkbox" id="estado-<?php echo $tarea->id; ?>" name="estado-<?php echo $tarea->id; ?>">
+                <label for="estado-<?php echo $tarea->id; ?>"><?php echo $tarea->titulo; ?></label>
               </div>
             </li>
           <?php endforeach; ?>

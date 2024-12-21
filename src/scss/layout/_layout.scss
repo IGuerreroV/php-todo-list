@@ -51,6 +51,8 @@
         margin: 0;
 
         li {
+          list-style: none;
+
           .estado {
             display: flex; // Asegura que los elementos se alineen en línea
             align-items: center; // Centra verticalmente
@@ -73,26 +75,24 @@
             }
 
             input[type="checkbox"]+label::before {
-              content: "\2713";
-              height: 18px;
-              line-height: 18px; // Asegura que el contenido esté centrado verticalmente
-              text-align: center;
-              width: 18px;
-              display: inline-flex; // Cambia a inline-flex para centrar el contenido
-              align-items: center; // Centra verticalmente
-              justify-content: center; // Centra horizontalmente
-              margin-right: 1rem;
-              cursor: pointer;
-              accent-color: v.$principal;
-              border: 2px solid v.$gray;
-              border-radius: 5px;
-              background: white;
+              content: ""; // El símbolo del check
+              height: 15px; // Tamaño del círculo contenedor
+              width: 15px; // Tamaño del círculo contenedor
+              line-height: 15px; // Igual al height para centrar verticalmente
+              display: inline-flex; // Flexbox para centrar
+              // align-items: center; // Centrado vertical
+              text-align: center; // Asegura el centrado del texto
+              margin-right: 1rem; // Espaciado entre el círculo y el texto del label
+              cursor: pointer; // Cambia el cursor al pasar por encima
+              border: 2px solid v.$gray; // Borde del checkbox
+              border-radius: 50%; // Forma circular
+              background: white; // Fondo blanco
+              background-color: transparent; // Punto invisible inicialmente
             }
 
-            label {
-              font-size: 2rem;
-              color: v.$black;
-              margin: 0;
+            input[type="checkbox"]:checked+label::before {
+              border-color: v.$principal; // Cambia el color del borde al seleccionar
+              background-color: v.$principal; // Hace visible el punto cuando está seleccionado
             }
           }
         }
