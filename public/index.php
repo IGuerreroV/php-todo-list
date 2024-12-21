@@ -6,8 +6,9 @@ use Controllers\TaskController;
 // Instancia principal
 $controller = new TaskController();
 
-// Llamar al metodo index
-$controller->index();
-
-// Incluir el Layout
-$controller->index();
+// Manejar las rutas
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $controller->crear();
+} else {
+  $controller->index();
+}

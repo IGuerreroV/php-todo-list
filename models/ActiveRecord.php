@@ -37,10 +37,41 @@ class ActiveRecord
     return static::$alertas; // Retorna las alertas (vacías por ahora)
   }
 
+  public function guardar()
+  {
+    $resultado = '';
+    if (!is_null($this->id)) {
+      // Actualizar
+      $resultado = $this->actualizar();
+    } else {
+      // Crear un nuevo registro
+      $resultado = $this->crear();
+    }
+    return $resultado;
+  }
+
+  // Actualizar un registro
+  public function actualizar()
+  {
+    // Sanitizar los datos
+    $atributos = $this->sanitizarAtributos();
+
+    // Iterar para ir agregando cada campo con su valor
+    $valores = [];
+    foreach ($atributos as $key => $value) {
+      $valores[] = "{key} = '{$value}'";
+    }
+
+    $query = "UPDATE " . $_ENV['DB_DATABASE'] . " SET ";
+    $query .= join(', ', $valores);
+    $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
+    $query .= " LIMIT 1";
+  }
+
   // Listar todos los registros
   public static function all()
   {
-    $query = "SELECT * FROM " . 'todolist_mvc'; // Consulta para obtener todos los registros
+    $query = "SELECT * FROM " . 'tareas'; // Consulta para obtener todos los registros
     $resultado = self::consultarSQL($query); // Ejecuta la consulta
     return $resultado; // Retorna los resultados
   }
@@ -68,6 +99,28 @@ class ActiveRecord
 
     // Retornar los resultados
     return $array; // Retorna el array de objetos
+  }
+
+  // Crear un nuevo registro
+  public function crear()
+  {
+    // Sanitizar los datos
+    $atributos = $this->sanitizarAtributos();
+
+    // Insertar en la base de datos
+    $query = "INSERT INTO " . 'tareas' . " (";
+    $query .= join(', ', array_keys($atributos));
+    $query .= ") VALUES ('";
+    $query .= join("', '", array_values($atributos));
+    $query .= "')";
+
+    // Resultado de la consulta
+    $resultado = self::$db->query($query);
+
+    return [ // Retorna un array con el resultado y el id del registro
+      'resultado' => $resultado,
+      'id' => self::$db->insert_id,
+    ];
   }
 
   // Crear un objeto en base a una consulta
